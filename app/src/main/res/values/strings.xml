@@ -1,3 +1,93 @@
 <resources>
     <string name="app_name">MyCity</string>
+
+    // Coffee shop
+    <string name="kara_mel">Kara-Mel Cafe Shop</string>
+    <string name="california_coffee_shop">California Coffee Shop</string>
+    <string name="exclusive_shop">Exclusive Shop</string>
+    <string name="coffee_mamas_shop">CoffeeMamas Shop</string>
+    <string name="kara_mel_description">It is the best coffee shop in the area. It has seating arrangement inside
+        and outside of shop. The service is too fast and good. You can also order sandwich.</string>
+    <string name="california_coffee_shop_description">It is the best coffee shop in the area. It has seating arrangement inside
+        and outside of shop. The service is too fast and good. You can also order sandwich.</string>
+    <string name="exclusive_shop_description">It is the best coffee shop in the area. It has seating arrangement inside
+        and outside of shop. The service is too fast and good. You can also order sandwich.</string>
+    <string name="coffee_mamas_shop_description">It is the best coffee shop in the area. It has seating arrangement inside
+        and outside of shop. The service is too fast and good. You can also order sandwich.</string>
+
+    // Restaurant
+    <string name="agra">Agra</string>
+    <string name="om">OM</string>
+    <string name="pizza_palast">Pizza Palast</string>
+    <string name="der_everest_restaurant">Der Everest Restaurant</string>
+    <string name="agra_description">It is the best restaurant in the area. It has seating arrangement inside
+        and outside the restaurant. The service is too fast and good. You can parcel the food too.</string>
+    <string name="om_description">It is the best restaurant in the area. It has seating arrangement inside
+        and outside the restaurant. The service is too fast and good. You can parcel the food too.</string>
+    <string name="pizza_palast_description">It is the best restaurant in the area. It has seating arrangement inside
+        and outside the restaurant. The service is too fast and good. You can parcel the food too.</string>
+    <string name="der_everest_restaurant_description">It is the best restaurant in the area. It has seating arrangement inside
+        and outside the restaurant. The service is too fast and good. You can parcel the food too.</string>
+
+    // Kid friendly place
+    <string name="elefantentor">Elefantentor</string>
+    <string name="tiergarten">Tiergarten</string>
+    <string name="bunte_treppe">Bunte Treppe</string>
+    <string name="spreebogen_park">Spreebogen Park</string>
+    <string name="elefantentor_description">It is the best kid friendly place in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="tiergarten_description">It is the best kid friendly place in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="bunte_treppe_description">It is the best kid friendly place in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="spreebogen_park_description">It is the best kid friendly place in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+
+    // Parks
+    <string name="carl_von_ossietzky_park">Carl Von Ossietzky Park</string>
+    <string name="henriette_herz_park">Henriette Herz Park</string>
+    <string name="playground_tiergarten">Playground Tiergarten</string>
+    <string name="james_simon_park">James Simon Park</string>
+    <string name="carl_von_ossietzky_park_description">It is the best park in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="henriette_herz_park_description">It is the best park in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="playground_tiergarten_description">It is the best park in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+    <string name="james_simon_park_description">It is the best park in the area.
+        It has separate chairs for aged people. The area is too clean. People can sit and enjoy food without any
+        restrictions. This place has swings and other things for kids to play with.</string>
+
+    // Shopping center
+    <string name="the_playce">The Playce</string>
+    <string name="mall_of_berlin">Mall of Berlin</string>
+    <string name="einkaufsbahnof_berlin_hbf">Einkaufsbahnof Berlin Hbf</string>
+    <string name="alexa_berlin">ALEXA Berlin</string>
+    <string name="the_playce_description">It is the best shopping center in the area.
+        It has chairs for people to sit and enjoy their meal. The shopping center is clean and echo friendly.
+        People can walk easily because of wide pathway. This shopping center has many different shops
+        for clothes, jewelry and shoes. Also have food cort on top of the shopping center.</string>
+    <string name="mall_of_berlin_description">It is the best shopping center in the area.
+        It has chairs for people to sit and enjoy their meal. The shopping center is clean and echo friendly.
+        People can walk easily because of wide pathway. This shopping center has many different shops
+        for clothes, jewelry and shoes. Also have food cort on top of the shopping center.</string>
+    <string name="einkaufsbahnof_berlin_hbf_description">It is the best shopping center in the area.
+        It has chairs for people to sit and enjoy their meal. The shopping center is clean and echo friendly.
+        People can walk easily because of wide pathway. This shopping center has many different shops
+        for clothes, jewelry and shoes. Also have food cort on top of the shopping center.</string>
+    <string name="alexa_berlin_description">It is the best shopping center in the area.
+        It has chairs for people to sit and enjoy their meal. The shopping center is clean and echo friendly.
+        People can walk easily because of wide pathway. This shopping center has many different shops
+        for clothes, jewelry and shoes. Also have food cort on top of the shopping center.</string>
+
+    <string name="small_size_price">2 \u20ac</string>
+    <string name="medium_size_price">4 \u20ac</string>
+    <string name="large_size_price">5.85 \u20ac</string>
 </resources>
