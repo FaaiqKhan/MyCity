@@ -87,7 +87,11 @@
         People can walk easily because of wide pathway. This shopping center has many different shops
         for clothes, jewelry and shoes. Also have food cort on top of the shopping center.</string>
 
-    <string name="small_size_price">2 \u20ac</string>
-    <string name="medium_size_price">4 \u20ac</string>
-    <string name="large_size_price">5.85 \u20ac</string>
+    // Screen titles
+    <string name="recommendation">Recommendations</string>
+    <string name="coffee_shop">Coffee Shops</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="kid_friendly_places">Kid Friendly Places</string>
+    <string name="parks">Parks</string>
+    <string name="shopping_center">Shopping Centers</string>
 </resources>
