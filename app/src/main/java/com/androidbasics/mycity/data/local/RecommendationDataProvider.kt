@@ -1,5 +1,5 @@
-package com.androidbasics.mycity.data
+package com.androidbasics.mycity.data.local
 
-object DataSource {
-    
+object RecommendationDataProvider {
+
 }

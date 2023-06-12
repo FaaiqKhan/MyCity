@@ -1,11 +1,10 @@
 package com.androidbasics.mycity.data
 
-import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 
-data class Coffee(
-    val type: CoffeeType,
-    val size: CoffeeSize,
-    @IntegerRes val price: Int,
+data class CoffeeShop(
+    @StringRes val name: Int,
+    val availableCoffeeType: List<CoffeeType>,
+    val availableCoffeeSize: List<CoffeeSize>,
     @StringRes val description: Int,
 )
