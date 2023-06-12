@@ -94,4 +94,6 @@
     <string name="kid_friendly_places">Kid Friendly Places</string>
     <string name="parks">Parks</string>
     <string name="shopping_center">Shopping Centers</string>
+
+    <string name="back_button">Back</string>
 </resources>

@@ -19,7 +19,7 @@ enum class CoffeeSize {
     SMALL, MEDIUM, LARGE
 }
 
-enum class Screens(@StringRes title: Int) {
+enum class Screens(@StringRes val title: Int) {
     RECOMMENDATIONS(title = R.string.recommendation),
     COFFEE_SHOPS(title = R.string.coffee_shop),
     RESTAURANTS(title = R.string.restaurants),
