@@ -15,7 +15,6 @@ import com.androidbasics.mycity.data.local.*
 @Composable
 fun MyCityApp(
     windowSize: WindowWidthSizeClass,
-    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
 
