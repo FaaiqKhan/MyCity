@@ -26,4 +26,9 @@ enum class Screens(@StringRes val title: Int) {
     KID_FRIENDLY_PLACES(title = R.string.kid_friendly_places),
     PARKS(title = R.string.parks),
     SHOPPING_CENTERS(title = R.string.shopping_center),
+    COFFEE_SHOP_DETAILS(title = R.string.coffee_shop_details),
+    RESTAURANT_DETAILS(title = R.string.restaurant_details),
+    KID_FRIENDLY_PLACE_DETAILS(title = R.string.kid_friendly_place_details),
+    PARK_DETAILS(title = R.string.park_details),
+    SHOPPING_CENTER_DETAILS(title = R.string.shopping_center_details)
 }

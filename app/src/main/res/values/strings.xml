@@ -96,4 +96,11 @@
     <string name="shopping_center">Shopping Centers</string>
 
     <string name="back_button">Back</string>
+
+    // Details screen titles
+    <string name="coffee_shop_details">Coffee shop details</string>
+    <string name="restaurant_details">Restaurant details</string>
+    <string name="kid_friendly_place_details">Kid Friendly Place details</string>
+    <string name="park_details">Park details</string>
+    <string name="shopping_center_details">Shopping center details</string>
 </resources>

@@ -50,13 +50,16 @@ fun MyCityApp(
                 RecommendationScreen(
                     recommendations = RecommendationDataProvider.recommendations,
                     modifier = screenModifier
-                ) { place ->  navController.navigate(route = place.screen.name)}
+                ) { place -> navController.navigate(route = place.screen.name) }
             }
             composable(route = Screens.COFFEE_SHOPS.name) {
                 PlaceScreen(
                     places = CoffeeShopDataProvider.coffees,
                     modifier = screenModifier
-                ) { /* TODO: navigate to screen according to selected place*/ }
+                ) {
+                    // TODO: set value in viewModel then navigate to detail screen
+                    navController.navigate(route = Screens.COFFEE_SHOP_DETAILS.name)
+                }
             }
             composable(route = Screens.RESTAURANTS.name) {
                 PlaceScreen(
@@ -83,6 +86,13 @@ fun MyCityApp(
                         .fillMaxHeight()
                         .padding(all = dimensionResource(R.dimen.padding_small))
                 ) { /* TODO: navigate to screen according to selected place*/ }
+            }
+            composable(route = Screens.COFFEE_SHOP_DETAILS.name) {
+                // TODO: pass viewModel as parameter so we get updated value
+                CoffeeDetailScreen(
+                    coffeeShop = CoffeeShopDataProvider.defaultCoffee,
+                    modifier = Modifier.fillMaxHeight()
+                )
             }
         }
     }
