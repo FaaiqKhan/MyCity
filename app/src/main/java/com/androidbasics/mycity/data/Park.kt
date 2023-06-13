@@ -1,11 +1,12 @@
 package com.androidbasics.mycity.data
 
-import androidx.annotation.StringRes
+import com.androidbasics.mycity.data.interfaces.Place
 
 data class Park(
-    @StringRes val name: Int,
+    override val name: Int,
+    override val image: Int,
+    override val description: Int,
     val hasTicket: Boolean,
     val ticketPrice: Double,
     val hasLake: Boolean,
-    @StringRes val description: Int,
-)
+) : Place

@@ -28,6 +28,10 @@ fun MyCityApp(
     val currentScreen =
         Screens.valueOf(backStackEntry?.destination?.route ?: Screens.RECOMMENDATIONS.name)
 
+    val screenModifier = Modifier
+        .fillMaxHeight()
+        .padding(all = dimensionResource(R.dimen.padding_small))
+
     Scaffold(
         topBar = {
             MyCityAppTopBar(
@@ -45,16 +49,41 @@ fun MyCityApp(
             composable(route = Screens.RECOMMENDATIONS.name) {
                 RecommendationScreen(
                     recommendations = RecommendationDataProvider.recommendations,
+                    modifier = screenModifier
+                ) { place ->  navController.navigate(route = place.screen.name)}
+            }
+            composable(route = Screens.COFFEE_SHOPS.name) {
+                PlaceScreen(
+                    places = CoffeeShopDataProvider.coffees,
+                    modifier = screenModifier
+                ) { /* TODO: navigate to screen according to selected place*/ }
+            }
+            composable(route = Screens.RESTAURANTS.name) {
+                PlaceScreen(
+                    places = RestaurantDataProvider.restaurants,
+                    modifier = screenModifier
+                ) { /* TODO: navigate to screen according to selected place*/ }
+            }
+            composable(route = Screens.KID_FRIENDLY_PLACES.name) {
+                PlaceScreen(
+                    places = KidFriendlyPlaceDataProvider.kidFriendlyPlaces,
+                    modifier = screenModifier
+                ) { /* TODO: navigate to screen according to selected place*/ }
+            }
+            composable(route = Screens.PARKS.name) {
+                PlaceScreen(
+                    places = ParkDataProvider.parks,
+                    modifier = screenModifier
+                ) { /* TODO: navigate to screen according to selected place*/ }
+            }
+            composable(route = Screens.SHOPPING_CENTERS.name) {
+                PlaceScreen(
+                    places = ShoppingCenterDataProvider.shoppingCenters,
                     modifier = Modifier
                         .fillMaxHeight()
-                        .padding(all = dimensionResource(id = R.dimen.padding_small))
-                ) { /* TODO: navigate to screen according to selectedRecommendation */  }
+                        .padding(all = dimensionResource(R.dimen.padding_small))
+                ) { /* TODO: navigate to screen according to selected place*/ }
             }
-            composable(route = Screens.COFFEE_SHOPS.name) {}
-            composable(route = Screens.RESTAURANTS.name) {}
-            composable(route = Screens.KID_FRIENDLY_PLACES.name) {}
-            composable(route = Screens.PARKS.name) {}
-            composable(route = Screens.SHOPPING_CENTERS.name) {}
         }
     }
 }

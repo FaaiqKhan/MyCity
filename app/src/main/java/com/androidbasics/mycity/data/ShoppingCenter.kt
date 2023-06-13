@@ -1,10 +1,11 @@
 package com.androidbasics.mycity.data
 
-import androidx.annotation.StringRes
+import com.androidbasics.mycity.data.interfaces.Place
 
 data class ShoppingCenter(
-    @StringRes val name: Int,
+    override val name: Int,
+    override val image: Int,
+    override val description: Int,
     val hasFoodCort: Boolean,
     val hasJewelryShops: Boolean,
-    @StringRes val description: Int,
-)
+) : Place

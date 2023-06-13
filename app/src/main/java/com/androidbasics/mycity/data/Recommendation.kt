@@ -5,5 +5,6 @@ import androidx.annotation.*
 data class Recommendation(
     @StringRes val name: Int,
     @DrawableRes val image: Int,
-    val recommendations: List<Any>
+    val recommendations: List<Any>,
+    val screen: Screens
 )
