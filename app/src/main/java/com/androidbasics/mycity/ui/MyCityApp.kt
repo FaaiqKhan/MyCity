@@ -6,23 +6,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.androidbasics.mycity.R
-import com.androidbasics.mycity.data.Screens
+import com.androidbasics.mycity.data.*
 import com.androidbasics.mycity.data.local.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCityApp(
     windowSize: WindowWidthSizeClass,
-    navController: NavHostController = rememberNavController()
 ) {
+    val viewModel: PlaceViewModel = viewModel()
+    val placeUiState = viewModel.uiState.collectAsState().value
+
+    val navController: NavHostController = rememberNavController()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen =
@@ -56,8 +59,10 @@ fun MyCityApp(
                 PlaceScreen(
                     places = CoffeeShopDataProvider.coffees,
                     modifier = screenModifier
-                ) {
-                    // TODO: set value in viewModel then navigate to detail screen
+                ) { selectedPlace ->
+                    val coffeePlace =
+                        CoffeeShopDataProvider.coffees.find { it.name == selectedPlace.name }
+                    viewModel.updatePlace(coffeePlace!!)
                     navController.navigate(route = Screens.COFFEE_SHOP_DETAILS.name)
                 }
             }
@@ -65,19 +70,33 @@ fun MyCityApp(
                 PlaceScreen(
                     places = RestaurantDataProvider.restaurants,
                     modifier = screenModifier
-                ) { /* TODO: navigate to screen according to selected place*/ }
+                ) { selectedPlace ->
+                    val restaurantPlace =
+                        RestaurantDataProvider.restaurants.find { it.name == selectedPlace.name }
+                    viewModel.updatePlace(restaurantPlace!!)
+                    navController.navigate(route = Screens.RESTAURANT_DETAILS.name)
+                }
             }
             composable(route = Screens.KID_FRIENDLY_PLACES.name) {
                 PlaceScreen(
                     places = KidFriendlyPlaceDataProvider.kidFriendlyPlaces,
                     modifier = screenModifier
-                ) { /* TODO: navigate to screen according to selected place*/ }
+                ) { selectedPlace ->
+                    val kidFriendlyPlace =
+                        KidFriendlyPlaceDataProvider.kidFriendlyPlaces.find { it.name == selectedPlace.name }
+                    viewModel.updatePlace(kidFriendlyPlace!!)
+                    navController.navigate(route = Screens.KID_FRIENDLY_PLACE_DETAILS.name)
+                }
             }
             composable(route = Screens.PARKS.name) {
                 PlaceScreen(
                     places = ParkDataProvider.parks,
                     modifier = screenModifier
-                ) { /* TODO: navigate to screen according to selected place*/ }
+                ) { selectedPlace ->
+                    val park = ParkDataProvider.parks.find { it.name == selectedPlace.name }
+                    viewModel.updatePlace(park!!)
+                    navController.navigate(route = Screens.PARK_DETAILS.name)
+                }
             }
             composable(route = Screens.SHOPPING_CENTERS.name) {
                 PlaceScreen(
@@ -85,12 +104,40 @@ fun MyCityApp(
                     modifier = Modifier
                         .fillMaxHeight()
                         .padding(all = dimensionResource(R.dimen.padding_small))
-                ) { /* TODO: navigate to screen according to selected place*/ }
+                ) { selectedPlace ->
+                    val shoppingCenter =
+                        ShoppingCenterDataProvider.shoppingCenters.find { it.name == selectedPlace.name }
+                    viewModel.updatePlace(shoppingCenter!!)
+                    navController.navigate(route = Screens.SHOPPING_CENTER_DETAILS.name)
+                }
             }
             composable(route = Screens.COFFEE_SHOP_DETAILS.name) {
-                // TODO: pass viewModel as parameter so we get updated value
                 CoffeeDetailScreen(
-                    coffeeShop = CoffeeShopDataProvider.defaultCoffee,
+                    coffeeShop = placeUiState.place as CoffeeShop,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = Screens.RESTAURANT_DETAILS.name) {
+                RestaurantDetailScreen(
+                    restaurant = placeUiState.place as Restaurant,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = Screens.KID_FRIENDLY_PLACE_DETAILS.name) {
+                KidFriendlyPlaceDetailScreen(
+                    kidFriendlyPlace = placeUiState.place as KidFriendlyPlace,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = Screens.PARK_DETAILS.name) {
+                ParkDetailsScreen(
+                    park = placeUiState.place as Park,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = Screens.SHOPPING_CENTER_DETAILS.name) {
+                ShoppingCenterDetailScreen(
+                    shoppingCenter = placeUiState.place as ShoppingCenter,
                     modifier = Modifier.fillMaxHeight()
                 )
             }

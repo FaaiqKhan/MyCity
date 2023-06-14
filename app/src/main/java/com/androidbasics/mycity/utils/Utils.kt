@@ -20,3 +20,15 @@ fun Any.copyAsCoffeeShop(): CoffeeShop {
 fun Any.copyAsRestaurant(): Restaurant {
     return this as Restaurant
 }
+
+object Utils {
+    enum class ReplyNavigationType {
+        BOTTOM_NAVIGATION,
+        NAVIGATION_RAIL,
+        PERMANENT_NAVIGATION_DRAWER
+    }
+
+    enum class MyCityContentType {
+        LIST_ONLY, LIST_AND_DETAIL
+    }
+}

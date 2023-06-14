@@ -1,10 +1,11 @@
 package com.androidbasics.mycity.data
 
-import androidx.annotation.*
+import com.androidbasics.mycity.data.interfaces.Place
 
 data class Recommendation(
-    @StringRes val name: Int,
-    @DrawableRes val image: Int,
+    override val name: Int,
+    override val image: Int,
+    override val description: Int,
     val recommendations: List<Any>,
     val screen: Screens
-)
+) : Place

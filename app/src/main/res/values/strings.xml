@@ -103,4 +103,11 @@
     <string name="kid_friendly_place_details">Kid Friendly Place details</string>
     <string name="park_details">Park details</string>
     <string name="shopping_center_details">Shopping center details</string>
+
+    // Recommendation places description
+    <string name="coffee_recommendation_description">Good coffee shops</string>
+    <string name="restaurant_recommendation_description">Good restaurants</string>
+    <string name="kid_friendly_place_recommendation_description">Good kid friendly places</string>
+    <string name="park_recommendation_description">Good parks</string>
+    <string name="shopping_center_recommendation_description">Good shopping centers</string>
 </resources>
