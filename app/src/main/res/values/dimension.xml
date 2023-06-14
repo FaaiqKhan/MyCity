@@ -13,4 +13,13 @@
     <dimen name="padding_detail_content_vertical">24dp</dimen>
 
     <dimen name="top_appbar_height">64dp</dimen>
+    <dimen name="divider_width">1dp</dimen>
+
+    <dimen name="drawer_width">240dp</dimen>
+    <dimen name="drawer_padding_header">16dp</dimen>
+    <dimen name="drawer_padding_content">12dp</dimen>
+
+    <dimen name="drawer_image_padding">16.dp</dimen>
+    <dimen name="drawer_image_size">20dp</dimen>
+    <dimen name="my_city_logo_size">48dp</dimen>
 </resources>

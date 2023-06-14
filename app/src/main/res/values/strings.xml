@@ -110,4 +110,14 @@
     <string name="kid_friendly_place_recommendation_description">Good kid friendly places</string>
     <string name="park_recommendation_description">Good parks</string>
     <string name="shopping_center_recommendation_description">Good shopping centers</string>
+
+    // Navigation
+    <string name="navigation_drawer">Navigation Drawer</string>
+    <string name="navigation_rail">Navigation Rail</string>
+    <string name="navigation_bottom">Navigation Bottom</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="info">Info</string>
+
+    <string name="logo">Logo</string>
 </resources>

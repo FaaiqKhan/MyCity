@@ -22,7 +22,7 @@ fun Any.copyAsRestaurant(): Restaurant {
 }
 
 object Utils {
-    enum class ReplyNavigationType {
+    enum class MyCityNavigationType {
         BOTTOM_NAVIGATION,
         NAVIGATION_RAIL,
         PERMANENT_NAVIGATION_DRAWER
