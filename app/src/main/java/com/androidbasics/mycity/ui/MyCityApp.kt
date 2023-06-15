@@ -18,6 +18,7 @@ import androidx.navigation.compose.*
 import com.androidbasics.mycity.R
 import com.androidbasics.mycity.data.*
 import com.androidbasics.mycity.data.local.*
+import com.androidbasics.mycity.utils.Utils.MyCityContentType
 import com.androidbasics.mycity.utils.Utils.MyCityNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,6 +40,7 @@ fun MyCityApp(
         .padding(all = dimensionResource(R.dimen.padding_small))
 
     val navigationType: MyCityNavigationType
+    val contentType: MyCityContentType
 
     val navigationItemContentList = listOf(
         NavigationItemContent(
@@ -61,18 +63,22 @@ fun MyCityApp(
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
             navigationType = MyCityNavigationType.BOTTOM_NAVIGATION
+            contentType = MyCityContentType.LIST_ONLY
         }
 
         WindowWidthSizeClass.Medium -> {
             navigationType = MyCityNavigationType.NAVIGATION_RAIL
+            contentType = MyCityContentType.LIST_ONLY
         }
 
         WindowWidthSizeClass.Expanded -> {
             navigationType = MyCityNavigationType.PERMANENT_NAVIGATION_DRAWER
+            contentType = MyCityContentType.LIST_AND_DETAIL
         }
 
         else -> {
             navigationType = MyCityNavigationType.BOTTOM_NAVIGATION
+            contentType = MyCityContentType.LIST_ONLY
         }
     }
 
@@ -90,9 +96,7 @@ fun MyCityApp(
                     stringResource(id = R.string.navigation_bottom)
                 BottomNavigationBar(
                     currentItem = placeUiState.currentNavigationItem,
-                    onTabPress = {
-                        viewModel.updateNavigationItem(it)
-                    },
+                    onTabPress = { viewModel.updateNavigationItem(it) },
                     navigationItemContentList = navigationItemContentList,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -109,7 +113,8 @@ fun MyCityApp(
                 navController = navController,
                 modifier = screenModifier,
                 viewModel = viewModel,
-                placeUiState = placeUiState
+                placeUiState = placeUiState,
+                contentType = contentType
             )
         }
         AnimatedVisibility(
@@ -136,7 +141,8 @@ fun MyCityApp(
                     navController = navController,
                     modifier = screenModifier,
                     viewModel = viewModel,
-                    placeUiState = placeUiState
+                    placeUiState = placeUiState,
+                    contentType = contentType
                 )
             }
         }
@@ -148,7 +154,9 @@ fun MyCityApp(
                 stringResource(id = R.string.navigation_drawer)
             PermanentNavigationDrawer(
                 drawerContent = {
-                    PermanentDrawerSheet(modifier = Modifier.width(dimensionResource(id = R.dimen.drawer_width))) {
+                    PermanentDrawerSheet(
+                        modifier = Modifier.width(dimensionResource(id = R.dimen.drawer_width))
+                    ) {
                         NavigationDrawerContent(
                             currentItem = placeUiState.currentNavigationItem,
                             onTabPress = { viewModel.updateNavigationItem(it) },
@@ -167,7 +175,8 @@ fun MyCityApp(
                     navController = navController,
                     modifier = screenModifier,
                     viewModel = viewModel,
-                    placeUiState = placeUiState
+                    placeUiState = placeUiState,
+                    contentType = contentType
                 )
             }
         }
@@ -179,7 +188,8 @@ private fun NavigationHost(
     navController: NavHostController,
     modifier: Modifier,
     viewModel: PlaceViewModel,
-    placeUiState: PlaceUiState
+    placeUiState: PlaceUiState,
+    contentType: MyCityContentType
 ) {
     NavHost(
         navController = navController,
@@ -188,8 +198,17 @@ private fun NavigationHost(
         composable(route = Screens.RECOMMENDATIONS.name) {
             RecommendationScreen(
                 recommendations = RecommendationDataProvider.recommendations,
-                modifier = modifier
-            ) { place -> navController.navigate(route = place.screen.name) }
+                modifier = modifier,
+                contentType = contentType,
+                placeUiState = placeUiState,
+                onClick = { place ->
+                    if (contentType == MyCityContentType.LIST_AND_DETAIL) {
+                        viewModel.updatePlace(place = place)
+                    } else {
+                        navController.navigate(route = place.screen.name)
+                    }
+                }
+            )
         }
         composable(route = Screens.COFFEE_SHOPS.name) {
             PlaceScreen(
@@ -285,7 +304,8 @@ private fun NavigationHost(
 fun MyCityAppTopBar(
     currentScreen: Screens,
     canNavigateBack: Boolean,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     TopAppBar(
         title = { Text(text = stringResource(id = currentScreen.title)) },
@@ -301,7 +321,8 @@ fun MyCityAppTopBar(
                     )
                 }
             }
-        }
+        },
+        modifier = modifier
     )
 }
 
