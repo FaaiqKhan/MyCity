@@ -63,7 +63,7 @@ fun RecommendationScreen(
             } else if (selectedPlace != null) {
                 Column(modifier = modifier.weight(1f)) {
                     MyCityAppTopBar(
-                        currentScreen = placeTitle ?: Screens.COFFEE_SHOP_DETAILS,
+                        title = placeTitle?.title ?: Screens.COFFEE_SHOP_DETAILS.title,
                         canNavigateBack = true,
                         navigateBack = { selectedPlace = null },
                         modifier = Modifier.clip(

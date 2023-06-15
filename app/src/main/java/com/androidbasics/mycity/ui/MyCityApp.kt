@@ -1,5 +1,6 @@
 package com.androidbasics.mycity.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,12 +27,12 @@ import com.androidbasics.mycity.utils.Utils.MyCityNavigationType
 fun MyCityApp(
     windowSize: WindowWidthSizeClass,
 ) {
-    val viewModel: PlaceViewModel = viewModel()
-    val placeUiState = viewModel.uiState.collectAsState().value
-
+    val myCityViewModel: PlaceViewModel = viewModel()
     val navController: NavHostController = rememberNavController()
 
+    val placeUiState = myCityViewModel.uiState.collectAsState().value
     val backStackEntry by navController.currentBackStackEntryAsState()
+
     val currentScreen =
         Screens.valueOf(backStackEntry?.destination?.route ?: Screens.RECOMMENDATIONS.name)
 
@@ -85,8 +86,15 @@ fun MyCityApp(
     Scaffold(
         topBar = {
             MyCityAppTopBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
+                title = when (placeUiState.currentNavigationItem) {
+                    NavigationItemType.INFO -> R.string.info
+                    NavigationItemType.PROFILE -> R.string.profile
+                    else -> currentScreen.title
+                },
+                canNavigateBack = when (placeUiState.currentNavigationItem) {
+                  NavigationItemType.INFO, NavigationItemType.PROFILE -> false
+                  else -> navController.previousBackStackEntry != null
+                },
                 navigateBack = { navController.popBackStack() }
             )
         },
@@ -96,8 +104,10 @@ fun MyCityApp(
                     stringResource(id = R.string.navigation_bottom)
                 BottomNavigationBar(
                     currentItem = placeUiState.currentNavigationItem,
-                    onTabPress = { viewModel.updateNavigationItem(it) },
                     navigationItemContentList = navigationItemContentList,
+                    onTabPress = {
+                        myCityViewModel.updateNavigationItem(it)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag(bottomNavigationContentDescription)
@@ -105,80 +115,110 @@ fun MyCityApp(
             }
         }
     ) { innerPadding ->
-        AnimatedVisibility(
-            visible = navigationType == MyCityNavigationType.BOTTOM_NAVIGATION,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            NavigationHost(
-                navController = navController,
-                modifier = screenModifier,
-                viewModel = viewModel,
-                placeUiState = placeUiState,
-                contentType = contentType
-            )
-        }
-        AnimatedVisibility(
-            visible = navigationType == MyCityNavigationType.NAVIGATION_RAIL,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            val railNavigationDescriptionContent = stringResource(id = R.string.navigation_rail)
-            Row {
-                RailNavigationBar(
-                    currentItem = placeUiState.currentNavigationItem,
-                    onTabPress = {
-                        viewModel.updateNavigationItem(it)
-                    },
-                    navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier
-                        .testTag(railNavigationDescriptionContent)
-                )
-                Divider(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(dimensionResource(id = R.dimen.divider_width))
-                )
-                NavigationHost(
-                    navController = navController,
-                    modifier = screenModifier,
-                    viewModel = viewModel,
-                    placeUiState = placeUiState,
-                    contentType = contentType
-                )
-            }
-        }
-        AnimatedVisibility(
-            visible = navigationType == MyCityNavigationType.PERMANENT_NAVIGATION_DRAWER,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            val navigationDrawerContentDescription =
-                stringResource(id = R.string.navigation_drawer)
-            PermanentNavigationDrawer(
-                drawerContent = {
-                    PermanentDrawerSheet(
-                        modifier = Modifier.width(dimensionResource(id = R.dimen.drawer_width))
-                    ) {
-                        NavigationDrawerContent(
-                            currentItem = placeUiState.currentNavigationItem,
-                            onTabPress = { viewModel.updateNavigationItem(it) },
-                            navigationItemContentList = navigationItemContentList,
+        Application(
+            navHostComposable = {
+                when (placeUiState.currentNavigationItem) {
+                    NavigationItemType.PROFILE -> {
+                        ProfileScreen(
                             modifier = Modifier
-                                .wrapContentWidth()
+                                .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
                                 .fillMaxHeight()
-                                .background(MaterialTheme.colorScheme.inverseOnSurface)
-                                .padding(dimensionResource(R.dimen.drawer_padding_content))
-                                .testTag(navigationDrawerContentDescription)
+                        )
+                    }
+
+                    NavigationItemType.INFO -> {
+                        InfoScreen(
+                            modifier = Modifier
+                                .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
+                                .fillMaxHeight()
+                        )
+                    }
+
+                    else -> {
+                        NavigationHost(
+                            navController = navController,
+                            modifier = screenModifier,
+                            viewModel = myCityViewModel,
+                            placeUiState = placeUiState,
+                            contentType = contentType
                         )
                     }
                 }
-            ) {
-                NavigationHost(
-                    navController = navController,
-                    modifier = screenModifier,
-                    viewModel = viewModel,
-                    placeUiState = placeUiState,
-                    contentType = contentType
-                )
+            },
+            innerPadding = innerPadding,
+            navigationType = navigationType,
+            viewModel = myCityViewModel,
+            contentList = navigationItemContentList,
+            uiState = placeUiState
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Application(
+    navHostComposable: @Composable () -> Unit,
+    innerPadding: PaddingValues,
+    navigationType: MyCityNavigationType,
+    viewModel: PlaceViewModel,
+    contentList: List<NavigationItemContent>,
+    uiState: PlaceUiState
+) {
+    AnimatedVisibility(
+        visible = navigationType == MyCityNavigationType.BOTTOM_NAVIGATION,
+        modifier = Modifier.padding(innerPadding)
+    ) {
+        navHostComposable()
+    }
+    AnimatedVisibility(
+        visible = navigationType == MyCityNavigationType.NAVIGATION_RAIL,
+        modifier = Modifier.padding(innerPadding)
+    ) {
+        val railNavigationDescriptionContent = stringResource(id = R.string.navigation_rail)
+        Row {
+            RailNavigationBar(
+                currentItem = uiState.currentNavigationItem,
+                onTabPress = {
+                    viewModel.updateNavigationItem(it)
+                },
+                navigationItemContentList = contentList,
+                modifier = Modifier
+                    .testTag(railNavigationDescriptionContent)
+            )
+            Divider(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(dimensionResource(id = R.dimen.divider_width))
+            )
+            navHostComposable()
+        }
+    }
+    AnimatedVisibility(
+        visible = navigationType == MyCityNavigationType.PERMANENT_NAVIGATION_DRAWER,
+        modifier = Modifier.padding(innerPadding)
+    ) {
+        val navigationDrawerContentDescription =
+            stringResource(id = R.string.navigation_drawer)
+        PermanentNavigationDrawer(
+            drawerContent = {
+                PermanentDrawerSheet(
+                    modifier = Modifier.width(dimensionResource(id = R.dimen.drawer_width))
+                ) {
+                    NavigationDrawerContent(
+                        currentItem = uiState.currentNavigationItem,
+                        onTabPress = { viewModel.updateNavigationItem(it) },
+                        navigationItemContentList = contentList,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .fillMaxHeight()
+                            .background(MaterialTheme.colorScheme.inverseOnSurface)
+                            .padding(dimensionResource(R.dimen.drawer_padding_content))
+                            .testTag(navigationDrawerContentDescription)
+                    )
+                }
             }
+        ) {
+            navHostComposable()
         }
     }
 }
@@ -302,13 +342,13 @@ private fun NavigationHost(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCityAppTopBar(
-    currentScreen: Screens,
+    @StringRes title: Int,
     canNavigateBack: Boolean,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(text = stringResource(id = currentScreen.title)) },
+        title = { Text(text = stringResource(title)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             MaterialTheme.colorScheme.primaryContainer
         ),

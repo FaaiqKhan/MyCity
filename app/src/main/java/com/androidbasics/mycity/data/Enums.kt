@@ -30,5 +30,11 @@ enum class Screens(@StringRes val title: Int) {
     RESTAURANT_DETAILS(title = R.string.restaurant_details),
     KID_FRIENDLY_PLACE_DETAILS(title = R.string.kid_friendly_place_details),
     PARK_DETAILS(title = R.string.park_details),
-    SHOPPING_CENTER_DETAILS(title = R.string.shopping_center_details)
+    SHOPPING_CENTER_DETAILS(title = R.string.shopping_center_details),
+}
+
+enum class NavigationItemType() {
+    HOME,
+    PROFILE,
+    INFO
 }
