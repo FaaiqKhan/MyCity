@@ -123,6 +123,7 @@ fun MyCityApp(
                             modifier = Modifier
                                 .padding(horizontal = dimensionResource(id = R.dimen.padding_small))
                                 .fillMaxHeight()
+                                .testTag(stringResource(id = R.string.profile))
                         )
                     }
 

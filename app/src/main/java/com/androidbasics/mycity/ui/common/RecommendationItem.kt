@@ -26,9 +26,7 @@ fun RecommendationItem(
 ) {
     Card(
         modifier = modifier,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = dimensionResource(id = R.dimen.card_elevation)
-        ),
+        elevation = CardDefaults.cardElevation(dimensionResource(id = R.dimen.card_elevation)),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_corner_radius)),
         onClick = { onClick(recommendation) }
     ) {
@@ -37,14 +35,15 @@ fun RecommendationItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = recommendation.image), contentDescription = null,
+                painter = painterResource(id = recommendation.image),
+                contentDescription = stringResource(id = recommendation.name),
                 modifier = Modifier.size(dimensionResource(id = R.dimen.card_image_height)),
                 contentScale = ContentScale.FillHeight
             )
             Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.padding_medium)))
             Text(
                 text = stringResource(id = recommendation.name),
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
             )
         }
     }
