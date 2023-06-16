@@ -23,10 +23,9 @@ class NavigationTest {
     @Before
     fun setupMyCityNavHost() {
         composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current).apply {
-                navigatorProvider.addNavigator(ComposeNavigator())
-            }
-            MyCityApp(windowSize = WindowWidthSizeClass.Compact)
+            navController = TestNavHostController(LocalContext.current)
+            navController.navigatorProvider.addNavigator(ComposeNavigator())
+            MyCityApp(windowSize = WindowWidthSizeClass.Compact, navController = navController)
         }
     }
 
@@ -49,6 +48,8 @@ class NavigationTest {
         val backButton = composeTestRule.activity.getString(R.string.back_button)
         composeTestRule.onNodeWithContentDescription(backButton).assertIsDisplayed()
 
+        navController.assertCurrentRouteName(Screens.COFFEE_SHOPS.name)
+
         // Check list of coffee displayed
         composeTestRule.onNodeWithTagForStringId(CoffeeShopDataProvider.defaultCoffee.name)
             .assertIsDisplayed()
@@ -58,5 +59,7 @@ class NavigationTest {
 
         // Check detail screen is displayed
         composeTestRule.onNodeWithStringId(R.string.coffee_shop_details).assertExists()
+
+        navController.assertCurrentRouteName(Screens.COFFEE_SHOP_DETAILS.name)
     }
 }

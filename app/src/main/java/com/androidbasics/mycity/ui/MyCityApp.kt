@@ -26,10 +26,9 @@ import com.androidbasics.mycity.utils.Utils.MyCityNavigationType
 @Composable
 fun MyCityApp(
     windowSize: WindowWidthSizeClass,
+    myCityViewModel: PlaceViewModel = viewModel(),
+    navController: NavHostController = rememberNavController()
 ) {
-    val myCityViewModel: PlaceViewModel = viewModel()
-    val navController: NavHostController = rememberNavController()
-
     val placeUiState = myCityViewModel.uiState.collectAsState().value
     val backStackEntry by navController.currentBackStackEntryAsState()
 
