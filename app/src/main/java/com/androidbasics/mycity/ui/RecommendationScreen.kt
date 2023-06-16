@@ -2,8 +2,9 @@ package com.androidbasics.mycity.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import com.androidbasics.mycity.ui.common.RecommendationItem
 import com.androidbasics.mycity.ui.theme.MyCityTheme
 import com.androidbasics.mycity.utils.Utils.MyCityContentType
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun RecommendationScreen(
     recommendations: List<Recommendation>,
@@ -30,36 +32,70 @@ fun RecommendationScreen(
     var selectedPlace by remember { mutableStateOf<Place?>(null) }
     var placeTitle by remember { mutableStateOf<Screens?>(null) }
 
+    val visibleState = remember {
+        MutableTransitionState(initialState = false).apply { targetState = true }
+    }
+
     if (contentType == MyCityContentType.LIST_AND_DETAIL) {
         val places =
             RecommendationDataProvider.recommendations.find { it.name == placeUiState.place.name }
         Row(modifier = modifier) {
-            LazyColumn(
+            AnimatedVisibility(
+                visibleState = visibleState,
+                enter = fadeIn(animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy)),
+                exit = fadeOut(),
                 modifier = modifier.weight(0.7f),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = dimensionResource(id = R.dimen.padding_medium)
-                )
             ) {
-                items(count = recommendations.size) {
-                    RecommendationItem(
-                        recommendation = recommendations[it],
-                        onClick = { selectedRecommendation -> onClick(selectedRecommendation) })
-                }
-            }
-            if (selectedPlace == null && places != null) {
-                LazyColumn(
-                    modifier = modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(
-                        space = dimensionResource(id = R.dimen.padding_medium)
-                    )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
                 ) {
-                    items(count = places.recommendations.size) {
-                        PlaceItem(
-                            suggestedPlace = places.recommendations[it] as Place,
-                            onClick = { place -> selectedPlace = place }
+                    for (i in recommendations.indices) {
+                        RecommendationItem(
+                            recommendation = recommendations[i],
+                            onClick = { selectedRecommendation -> onClick(selectedRecommendation) },
+                            modifier = Modifier.animateEnterExit(
+                                enter = slideInVertically(
+                                    animationSpec = spring(
+                                        stiffness = Spring.StiffnessVeryLow,
+                                        dampingRatio = Spring.DampingRatioLowBouncy
+                                    ),
+                                    initialOffsetY = { it * (i + 1) } // staggered entrance
+                                )
+                            )
                         )
                     }
                 }
+            }
+            if (selectedPlace == null && places != null) {
+                AnimatedVisibility(
+                    visibleState = visibleState,
+                    modifier = modifier.weight(1f),
+                    enter = fadeIn(animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy)),
+                    exit = fadeOut(),
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(
+                            space = dimensionResource(id = R.dimen.padding_medium)
+                        )
+                    ) {
+                        for (i in places.recommendations.indices) {
+                            PlaceItem(
+                                suggestedPlace = places.recommendations[i] as Place,
+                                onClick = { place -> selectedPlace = place },
+                                modifier = Modifier.animateEnterExit(
+                                    enter = slideInHorizontally (
+                                        animationSpec = spring(
+                                            stiffness = Spring.StiffnessVeryLow,
+                                            dampingRatio = Spring.DampingRatioLowBouncy
+                                        ),
+                                        initialOffsetX = { it * (i + 1) } // staggered entrance
+                                    )
+                                )
+                            )
+                        }
+                    }
+                }
+
             } else if (selectedPlace != null) {
                 Column(modifier = modifier.weight(1f)) {
                     MyCityAppTopBar(
@@ -107,16 +143,32 @@ fun RecommendationScreen(
             }
         }
     } else {
-        LazyColumn(
+        AnimatedVisibility(
+            visibleState = visibleState,
+            enter = fadeIn(animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy)),
+            exit = fadeOut(),
             modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(
-                space = dimensionResource(id = R.dimen.padding_medium)
-            )
         ) {
-            items(count = recommendations.size) {
-                RecommendationItem(
-                    recommendation = recommendations[it],
-                    onClick = { selectedRecommendation -> onClick(selectedRecommendation) })
+            Column(
+                verticalArrangement = Arrangement.spacedBy(
+                    space = dimensionResource(id = R.dimen.padding_small)
+                )
+            ) {
+                for (i in recommendations.indices) {
+                    RecommendationItem(
+                        recommendation = recommendations[i],
+                        onClick = { selectedRecommendation -> onClick(selectedRecommendation) },
+                        modifier = Modifier.animateEnterExit(
+                            enter = slideInVertically(
+                                animationSpec = spring(
+                                    stiffness = Spring.StiffnessVeryLow,
+                                    dampingRatio = Spring.DampingRatioLowBouncy
+                                ),
+                                initialOffsetY = { it * (i + 1) } // staggered entrance
+                            )
+                        )
+                    )
+                }
             }
         }
     }
